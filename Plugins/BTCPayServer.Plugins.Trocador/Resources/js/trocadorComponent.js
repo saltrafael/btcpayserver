@@ -1,6 +1,6 @@
 function getUrl(that) {
   const { model, markupPercentage, referralCode, address } = that;
-  const { fiatDenominated, defaultPaymentMethodId } =
+  const { fiatDenominated, defaultPaymentMethodId, preselectedCoin } =
     window.trocadorProps || that;
 
   const {
@@ -40,7 +40,14 @@ function getUrl(that) {
 
   // -- Optional Params --
   let amount = toCurrencyDue && toCurrencyDue;
-  const fromPreset = "&ticker_from=xmr" + "&network_from=Mainnet"; // todo: setting
+
+  let fromPreset;
+
+  if (preselectedCoin) {
+    const [tickerFrom, networkFrom = "Mainnet"] = preselectedCoin.split("-");
+
+    fromPreset = `&ticker_from=${tickerFrom.toLowerCase()}&network_from=${networkFrom}`;
+  }
 
   const btcPayGreen = "51b13e";
   const buttonBgColor = `&buttonbgcolor=${
@@ -92,6 +99,7 @@ const PROPS = [
   "markupPercentage",
   "fiatDenominated",
   "defaultPaymentMethodId",
+  "preselectedCoin",
 ];
 
 // -- Classic Checkout --
