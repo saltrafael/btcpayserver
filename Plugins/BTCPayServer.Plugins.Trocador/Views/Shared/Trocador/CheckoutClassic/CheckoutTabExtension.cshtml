@@ -1,0 +1,24 @@
+@using BTCPayServer.Plugins.Trocador
+@using Newtonsoft.Json
+@using Newtonsoft.Json.Linq
+@inject TrocadorService TrocadorService
+@{
+    const string defaultId = "Trocador";
+
+    var storeId = ((JObject)JObject.Parse(JsonConvert.SerializeObject(Model)))["StoreId"].Value<string>();
+    var settings = await TrocadorService.GetTrocadorForStore(storeId);
+
+    if (settings?.Enabled is not true)
+    {
+        return;
+    }
+
+    string customId = settings?.PaymentMethodId;
+    string displayId = (!string.IsNullOrEmpty(customId) ? customId : defaultId);
+} 
+
+<div class="payment-tabs__tab" id="@(defaultId)-tab" v-on:click="switchTab('@(defaultId)')"
+    v-bind:class="{ 'active': currentTab == '@(defaultId)'}" v-if="!srvModel.paymentMethodId.endsWith('LNURLPAY')">
+    <span>@displayId</span>
+</div>
+        
