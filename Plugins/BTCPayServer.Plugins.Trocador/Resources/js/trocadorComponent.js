@@ -27,7 +27,7 @@ function getUrl(that) {
   let tickerTo = toCurrency;
   let networkTo = "Mainnet";
 
-  if (tickerTo.endsWith("LightningLike") || tickerTo.endsWith("LNURLPay")) {
+  if (tickerTo.includes("Lightning") || tickerTo.includes("LNURL")) {
     tickerTo = "btc";
     networkTo = "Lightning";
   } else {
@@ -35,6 +35,7 @@ function getUrl(that) {
       .replace("_BTCLike", "")
       .replace("_MoneroLike", "")
       .replace("_ZcashLike", "")
+      .replace(/-.*/g, "")
       .toLowerCase();
   }
 
@@ -59,13 +60,29 @@ function getUrl(that) {
   let fiatCurrency;
 
   if (fiatDenominated) {
-    const orderRegex = /(\d+\.\d+)/;
-    const orderMatch = orderRegex.exec(orderAmountFiat);
+    const amountRegex = /([\d,.]+)/;
+    const amountMatch = orderAmountFiat.replace(/[  ]/g, "").match(amountRegex);
+    const formattedAmount = amountMatch && amountMatch[0];
 
-    amount = orderMatch && orderMatch[0];
+    const commaDecimal = formattedAmount.lastIndexOf(",");
+    const pointDecimal = formattedAmount.lastIndexOf(".");
+    const decimalSeparatorIndex =
+        commaDecimal > pointDecimal
+            ? commaDecimal
+            : commaDecimal === pointDecimal
+            ? formattedAmount.length
+            : pointDecimal;
+
+    const integerAmount = formattedAmount.substring(0, decimalSeparatorIndex);
+    const decimals =
+        decimalSeparatorIndex < formattedAmount.length
+            ? '.' + formattedAmount.substring(decimalSeparatorIndex + 1, formattedAmount.length)
+            : "";
+
+    amount = integerAmount.replace(/[,.]/g, '') + decimals;
 
     const currencyRegex = /([A-Z]{3})/;
-    const currencyMatch = currencyRegex.exec(orderAmountFiat);
+    const currencyMatch = orderAmountFiat.match(currencyRegex);
     fiatCurrency = currencyMatch && currencyMatch[0];
   }
 

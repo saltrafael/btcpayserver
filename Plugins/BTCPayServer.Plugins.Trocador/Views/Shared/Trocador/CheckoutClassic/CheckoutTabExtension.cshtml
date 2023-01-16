@@ -15,10 +15,9 @@
 
     string customId = settings?.PaymentMethodId;
     string displayId = (!string.IsNullOrEmpty(customId) ? customId : defaultId);
-} 
+}
 
-<div class="payment-tabs__tab" id="@(defaultId)-tab" v-on:click="switchTab('@(defaultId)')"
-    v-bind:class="{ 'active': currentTab == '@(defaultId)'}" v-if="!srvModel.paymentMethodId.endsWith('LNURLPAY')">
+<div class="payment-tabs__tab" id="'@defaultId'-tab" v-on:click="switchTab('@defaultId')"
+    v-bind:class="{ 'active': currentTab == '@defaultId'}">
     <span>@displayId</span>
 </div>
-        

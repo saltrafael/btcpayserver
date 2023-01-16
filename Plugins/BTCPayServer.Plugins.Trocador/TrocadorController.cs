@@ -63,14 +63,11 @@ namespace BTCPayServer.Plugins.Trocador
                     if (cryptoCode == label && (cryptoCode.EndsWith("LightningNetwork") || cryptoCode.EndsWith("LNURLPAY")))
                     {
                         label = "Lightning";
-                        cryptoCode = "BTC_LightningLike";
                     }
 
 
-                    if (!newPaymentMethods.ContainsKey(label))
-                    {
-                        newPaymentMethods[label] = cryptoCode;
-                    }
+                    newPaymentMethods[label] = cryptoCode;
+
                 }
 
                 vm.PaymentMethods = newPaymentMethods;
