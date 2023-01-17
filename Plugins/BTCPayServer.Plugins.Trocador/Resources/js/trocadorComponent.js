@@ -93,6 +93,10 @@ function getUrl(that) {
     donation = true;
   }
 
+  // Where the checkout page will open
+  const checkoutTarget = "&target=blank";
+
+
   const url =
     "https://trocador.app/anonpay/?" +
     `ticker_to=${tickerTo}` +
@@ -106,7 +110,8 @@ function getUrl(that) {
     buttonBgColor +
     (fiatCurrency ? `&fiat_equiv=${fiatCurrency}` : "") +
     (donation ? "&donation=True" : "") +
-    (referralCode ? `&ref=${referralCode}` : "");
+    (referralCode ? `&ref=${referralCode}` : "") +
+    checkoutTarget;
 
   return url;
 }
