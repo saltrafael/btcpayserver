@@ -35,6 +35,16 @@
                 </div>
 
                 <div class="form-group">
+                    <div class="d-flex align-items-center">
+                        <input asp-for="ShowFirst" type="checkbox" class="btcpay-toggle me-2" />
+                        <label asp-for="ShowFirst" class="form-label mb-0 me-1">Show Trocador first on
+                            invoice?</label>
+                        <span class="form-text">On invoice creation, Trocador will be active tab shown first.
+                        </span>
+                    </div>
+                </div>
+
+                <div class="form-group">
                     <label class="form-label" asp-for="DefaultPaymentMethodId">Default wallet to receive:</label>
                     <select asp-for="DefaultPaymentMethodId" class="form-select" id="default-payment-method">
                         <option value="Auto" asp-for="DefaultPaymentMethodId">Auto</option>

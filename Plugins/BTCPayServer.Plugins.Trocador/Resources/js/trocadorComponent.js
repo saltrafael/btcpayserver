@@ -119,52 +119,6 @@ const PROPS = [
   "preselectedCoin",
 ];
 
-// -- Classic Checkout --
-Vue.component("trocador", {
-  props: PROPS,
-  data() {
-    return {
-      address: undefined,
-      shown: false,
-    };
-  },
-  computed: {
-    url() {
-      return getUrl(this);
-    },
-  },
-  mounted() {
-    this.fetchData();
-  },
-  methods: {
-    async fetchData() {
-      const defaultPaymentMethodId =
-        this.defaultPaymentMethodId ||
-        window.trocadorProps.defaultPaymentMethodId;
-
-      const url = `/i/${this.model.invoiceId}/status?invoiceId=${this.model.invoiceId}&paymentMethodId=${defaultPaymentMethodId}`;
-      const response = await fetch(url);
-      if (response.ok) {
-        const data = await response.json();
-        this.updateData(data);
-      }
-    },
-    updateData(data) {
-      const { invoiceBitcoinUrl } = data;
-
-      this.address = invoiceBitcoinUrl.substring(
-        invoiceBitcoinUrl.indexOf(":") > -1
-          ? invoiceBitcoinUrl.indexOf(":") + 1
-          : 0,
-        invoiceBitcoinUrl.indexOf("?") > -1
-          ? invoiceBitcoinUrl.indexOf("?")
-          : invoiceBitcoinUrl.length
-      );
-    },
-  },
-});
-
-// -- Checkout v2 --
 Vue.component("TrocadorCheckout", {
   template: "#trocador-checkout-template",
   props: PROPS,
@@ -188,11 +142,13 @@ Vue.component("TrocadorCheckout", {
         this.defaultPaymentMethodId ||
         window.trocadorProps.defaultPaymentMethodId;
 
-      const url = `/i/${this.model.invoiceId}/status?invoiceId=${this.model.invoiceId}&paymentMethodId=${defaultPaymentMethodId}`;
-      const response = await fetch(url);
-      if (response.ok) {
-        const data = await response.json();
-        this.updateData(data);
+      if (defaultPaymentMethodId && defaultPaymentMethodId !== "Auto") {
+        const url = `/i/${this.model.invoiceId}/status?invoiceId=${this.model.invoiceId}&paymentMethodId=${defaultPaymentMethodId}`;
+        const response = await fetch(url);
+        if (response.ok) {
+          const data = await response.json();
+          this.updateData(data);
+        }
       }
     },
     updateData(data) {

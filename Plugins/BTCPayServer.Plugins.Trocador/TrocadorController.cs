@@ -86,6 +86,7 @@ namespace BTCPayServer.Plugins.Trocador
             vm.ReferralCode = existing.ReferralCode;
             vm.PaymentMethodId = existing.PaymentMethodId;
             vm.PreselectedCoin = existing.PreselectedCoin;
+            vm.ShowFirst = existing.ShowFirst;
         }
 
         [HttpPost("")]
@@ -108,6 +109,7 @@ namespace BTCPayServer.Plugins.Trocador
                 ReferralCode = vm.ReferralCode,
                 PaymentMethodId = vm.PaymentMethodId,
                 PreselectedCoin = vm.PreselectedCoin,
+                ShowFirst = vm.ShowFirst,
             };
 
             switch (command)

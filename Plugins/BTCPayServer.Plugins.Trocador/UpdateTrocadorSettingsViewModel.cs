@@ -11,5 +11,6 @@ namespace BTCPayServer.Plugins.Trocador
         public string PaymentMethodId { get; set; }
         public Dictionary<string, string> PaymentMethods { get; set; }
         public string PreselectedCoin { get; set; }
+        public bool ShowFirst { get; set; }
     }
 }
