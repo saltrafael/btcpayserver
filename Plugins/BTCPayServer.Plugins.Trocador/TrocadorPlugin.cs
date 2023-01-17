@@ -1,7 +1,9 @@
+using System;
+using System.Reflection;
 using BTCPayServer.Abstractions.Contracts;
+using Microsoft.Extensions.DependencyInjection;
 using BTCPayServer.Abstractions.Models;
 using BTCPayServer.Abstractions.Services;
-using Microsoft.Extensions.DependencyInjection;
 
 namespace BTCPayServer.Plugins.Trocador
 {
@@ -11,6 +13,10 @@ namespace BTCPayServer.Plugins.Trocador
         public override string Name => "Trocador";
         public override string Description =>
             "Allows you to embed a trocador.app conversion screen to allow customers to pay with altcoins.";
+
+        public override Version Version => Assembly.GetAssembly(GetType())?.GetName().Version ?? new Version(1, 1, 0, 0);
+            
+        
 
         public override IBTCPayServerPlugin.PluginDependency[] Dependencies { get; } =
         {
