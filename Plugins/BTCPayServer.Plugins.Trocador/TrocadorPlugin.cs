@@ -14,7 +14,7 @@ namespace BTCPayServer.Plugins.Trocador
         public override string Description =>
             "Allows you to embed a trocador.app conversion screen to allow customers to pay with altcoins.";
 
-        public override Version Version => Assembly.GetAssembly(GetType())?.GetName().Version ?? new Version(1, 1, 1, 0);
+        public override Version Version => Assembly.GetAssembly(GetType())?.GetName().Version ?? new Version(1, 1, 3, 0);
             
         
 
