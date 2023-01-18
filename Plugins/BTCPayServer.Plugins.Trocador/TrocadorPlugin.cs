@@ -50,6 +50,9 @@ namespace BTCPayServer.Plugins.Trocador
 
             services.AddSingleton<IUIExtension>(new UIExtension("Trocador/CheckoutEnd", "checkout-end"));
 
+            // -- Checkout No-Script --
+            services.AddSingleton<IUIExtension>(new UIExtension("Trocador/CheckoutNoScript/CheckoutPaymentExtension", "checkout-noscript-end"));
+
             base.Execute(services);
         }
     }
